@@ -218,10 +218,12 @@
         .btn-group {
             display: flex;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
         .btn {
             flex: 1;
+            min-width: 120px;
             padding: 12px 20px;
             border: none;
             border-radius: 8px;
@@ -301,20 +303,39 @@
 
         .delete-btn {
             background: linear-gradient(135deg, #c9d9dc 0%, #b6cdd0 100%);
-            color: #4a676e;
+            color: #ff4757;
             border: none;
-            padding: 8px 12px;
+            padding: 6px 10px;
             border-radius: 6px;
             cursor: pointer;
             margin-left: 10px;
             box-shadow: 0 4px 15px rgba(201, 217, 220, 0.3);
             transition: all 0.3s;
+            font-size: 0.8rem;
         }
 
         .delete-btn:hover {
             background: linear-gradient(135deg, #b6cdd0 0%, #a3bec2 100%);
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(201, 217, 220, 0.4);
+        }
+
+        .edit-btn {
+            background: linear-gradient(135deg, #9DBEC3 0%, #8aafb5 100%);
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(157, 190, 195, 0.3);
+            transition: all 0.3s;
+            font-size: 0.8rem;
+        }
+
+        .edit-btn:hover {
+            background: linear-gradient(135deg, #8aafb5 0%, #779ca2 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(157, 190, 195, 0.4);
         }
 
         .stats-section {
@@ -403,6 +424,7 @@
             max-height: 90vh;
             overflow-y: auto;
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            box-sizing: border-box;
         }
 
         .modal-content h3 {
@@ -433,6 +455,7 @@
 
             .date-range-selector input {
                 width: 100%;
+                box-sizing: border-box;
             }
 
             .date-range-selector button {
@@ -443,6 +466,7 @@
                 padding: 15px;
                 width: 98%;
                 max-height: 95vh;
+                box-sizing: border-box;
             }
 
             .form-group input,
@@ -450,11 +474,13 @@
             .form-group textarea {
                 padding: 10px;
                 font-size: 1rem;
+                box-sizing: border-box;
             }
 
             .btn {
                 padding: 10px 16px;
                 font-size: 0.9rem;
+                min-width: 100px;
             }
 
             .calendar-day {
@@ -473,24 +499,37 @@
         @media (max-width: 480px) {
             body {
                 padding: 10px;
+                overflow-x: hidden;
             }
 
             .card {
                 padding: 15px;
+                box-sizing: border-box;
             }
 
             .modal-content {
                 padding: 12px;
+                box-sizing: border-box;
             }
 
             .form-group input,
             .form-group select,
             .form-group textarea {
                 padding: 8px;
+                box-sizing: border-box;
             }
 
             .btn {
                 padding: 8px 12px;
+                min-width: 80px;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn-group .btn {
+                width: 100%;
             }
         }
     </style>
@@ -567,6 +606,10 @@
                             <option value="农讲所补习社">农讲所补习社</option>
                             <option value="其他">其他</option>
                         </select>
+                    </div>
+                    <div class="form-group" id="otherLocationGroup" style="display: none;">
+                        <label for="otherLocation">其他地点</label>
+                        <input type="text" id="otherLocation" placeholder="请输入其他地点">
                     </div>
                     <div class="form-group">
                         <label for="teachingDate">上课日期</label>
@@ -820,14 +863,14 @@
                 <div class="record-item" data-id="${record.id}">
                     <div class="record-info">
                         <div class="student-name">${record.studentName} (${record.grade})</div>
-                        <div class="details">
-                            📍 ${record.location} | 🕐 ${record.startTime} - ${record.endTime} | 📅 ${record.date}
-                        </div>
-                        ${record.homework ? `<div class="details" style="margin-top: 5px; font-style: italic;">📝 作业：${record.homework}</div>` : ''}
+                        <div class="details">📍 ${record.location}</div>
+                        <div class="details">📅 ${record.date}</div>
+                        <div class="details">🕐 ${record.startTime} - ${record.endTime}</div>
+                        <div class="details" style="font-style: italic;">📝 作业：${record.homework || '无'}</div>
                     </div>
                     <div class="record-fee">¥${record.fee}</div>
                     <div style="display: flex; gap: 5px;">
-                        <button class="btn btn-primary" style="padding: 6px 10px; font-size: 0.8rem;" onclick="editRecord('${record.id}')">修改</button>
+                        <button class="edit-btn" onclick="editRecord('${record.id}')">修改</button>
                         <button class="delete-btn" onclick="deleteRecord('${record.id}')">删除</button>
                     </div>
                 </div>
@@ -919,14 +962,14 @@
                 <div class="record-item" data-id="${record.id}">
                     <div class="record-info">
                         <div class="student-name">${record.studentName} (${record.grade})</div>
-                        <div class="details">
-                            📍 ${record.location} | 🕐 ${record.startTime} - ${record.endTime} | 📅 ${record.date}
-                        </div>
-                        ${record.homework ? `<div class="details" style="margin-top: 5px; font-style: italic;">📝 作业：${record.homework}</div>` : ''}
+                        <div class="details">📍 ${record.location}</div>
+                        <div class="details">📅 ${record.date}</div>
+                        <div class="details">🕐 ${record.startTime} - ${record.endTime}</div>
+                        <div class="details" style="font-style: italic;">📝 作业：${record.homework || '无'}</div>
                     </div>
                     <div class="record-fee">¥${record.fee}</div>
                     <div style="display: flex; gap: 5px;">
-                        <button class="btn btn-primary" style="padding: 6px 10px; font-size: 0.8rem;" onclick="editRecord('${record.id}')">修改</button>
+                        <button class="edit-btn" onclick="editRecord('${record.id}')">修改</button>
                         <button class="delete-btn" onclick="deleteRecord('${record.id}')">删除</button>
                     </div>
                 </div>
@@ -950,7 +993,7 @@
         }
 
         function deleteRecord(id) {
-            if (confirm('确定要删除这条记录吗？')) {
+            if (confirm('确定要删除这条记录吗？删除后无法恢复。')) {
                 records = records.filter(r => r.id !== id);
                 saveRecords();
                 renderCalendar();
@@ -979,7 +1022,24 @@
                 document.getElementById('editId').value = record.id;
                 document.getElementById('studentName').value = record.studentName;
                 document.getElementById('grade').value = record.grade;
-                document.getElementById('location').value = record.location;
+                
+                // 处理地点选择
+                const locationSelect = document.getElementById('location');
+                const otherLocationGroup = document.getElementById('otherLocationGroup');
+                const otherLocationInput = document.getElementById('otherLocation');
+                
+                // 检查地点是否在预设选项中
+                const presetLocations = ['明爱补习社', '农讲所补习社'];
+                if (presetLocations.includes(record.location)) {
+                    locationSelect.value = record.location;
+                    otherLocationGroup.style.display = 'none';
+                    otherLocationInput.value = '';
+                } else {
+                    locationSelect.value = '其他';
+                    otherLocationGroup.style.display = 'block';
+                    otherLocationInput.value = record.location;
+                }
+                
                 document.getElementById('teachingDate').value = record.date;
                 
                 // 解析开始时间
@@ -1044,7 +1104,7 @@
                     <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px; margin-bottom: 8px;">
                         <div style="font-weight: bold;">${record.date} (周${weekDay})</div>
                         <div>${record.startTime} - ${record.endTime} | ${record.studentName}</div>
-                        ${record.homework ? `<div style="margin-top: 5px; font-size: 0.9rem; font-style: italic;">📝 作业：${record.homework}</div>` : ''}
+                        <div style="margin-top: 5px; font-size: 0.9rem; font-style: italic;">📝 作业：${record.homework || '无'}</div>
                     </div>
                 `;
             }).join('');
@@ -1061,6 +1121,17 @@
                 renderCalendar();
             });
 
+            // 监听地点选择，显示/隐藏其他地点输入框
+            document.getElementById('location').addEventListener('change', function() {
+                const otherLocationGroup = document.getElementById('otherLocationGroup');
+                if (this.value === '其他') {
+                    otherLocationGroup.style.display = 'block';
+                } else {
+                    otherLocationGroup.style.display = 'none';
+                    document.getElementById('otherLocation').value = '';
+                }
+            });
+
             recordForm.addEventListener('submit', (e) => {
                 e.preventDefault();
 
@@ -1069,11 +1140,20 @@
                 const startMinute = document.getElementById('startMinute').value;
                 const startTime = `${startHour}:${startMinute}`;
                 
+                // 处理地点选择
+                let location = document.getElementById('location').value;
+                if (location === '其他') {
+                    const otherLocation = document.getElementById('otherLocation').value;
+                    if (otherLocation) {
+                        location = otherLocation;
+                    }
+                }
+                
                 const recordData = {
                     id: editId || Date.now().toString(),
                     studentName: document.getElementById('studentName').value,
                     grade: document.getElementById('grade').value,
-                    location: document.getElementById('location').value,
+                    location: location,
                     date: document.getElementById('teachingDate').value,
                     startTime: startTime,
                     endTime: document.getElementById('endTime').value,
@@ -1098,12 +1178,16 @@
                 document.getElementById('addRecordModal').classList.remove('active');
                 recordForm.reset();
                 document.getElementById('editId').value = '';
+                document.getElementById('otherLocationGroup').style.display = 'none';
+                document.getElementById('otherLocation').value = '';
             });
 
             document.getElementById('cancelBtn').addEventListener('click', () => {
                 document.getElementById('addRecordModal').classList.remove('active');
                 recordForm.reset();
                 document.getElementById('editId').value = '';
+                document.getElementById('otherLocationGroup').style.display = 'none';
+                document.getElementById('otherLocation').value = '';
             });
 
             document.getElementById('closeViewModal').addEventListener('click', () => {
@@ -1150,9 +1234,6 @@
                     const weekDays = ['日', '一', '二', '三', '四', '五', '六'];
                     const weekDay = weekDays[date.getDay()];
                     text += `${index + 1}. ${record.date} (周${weekDay}) ${record.startTime} - ${record.endTime} ${record.studentName}\n`;
-                    if (record.homework) {
-                        text += `   作业：${record.homework}\n`;
-                    }
                 });
                 
                 // 复制到剪贴板
