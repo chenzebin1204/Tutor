@@ -396,10 +396,12 @@
 
         .modal-content {
             background: linear-gradient(145deg, #ffffff, #f8fbfc);
-            padding: 30px;
+            padding: 20px;
             border-radius: 16px;
-            width: 90%;
+            width: 95%;
             max-width: 400px;
+            max-height: 90vh;
+            overflow-y: auto;
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
 
@@ -422,6 +424,73 @@
 
             .stats-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .date-range-selector {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .date-range-selector input {
+                width: 100%;
+            }
+
+            .date-range-selector button {
+                width: 100%;
+            }
+
+            .modal-content {
+                padding: 15px;
+                width: 98%;
+                max-height: 95vh;
+            }
+
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                padding: 10px;
+                font-size: 1rem;
+            }
+
+            .btn {
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+
+            .calendar-day {
+                font-size: 0.9rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .calendar-header h2 {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .card {
+                padding: 15px;
+            }
+
+            .modal-content {
+                padding: 12px;
+            }
+
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                padding: 8px;
+            }
+
+            .btn {
+                padding: 8px 12px;
             }
         }
     </style>
