@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #f5f8f9 0%, #e8f0f2 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -19,10 +19,10 @@
 
         h1 {
             text-align: center;
-            color: white;
+            color: #4a676e;
             margin-bottom: 20px;
             font-size: 2rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
         }
 
         .main-content {
@@ -35,8 +35,8 @@
             background: white;
             border-radius: 16px;
             padding: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background: linear-gradient(145deg, #ffffff, #f8fbfc);
         }
 
         .calendar-header {
@@ -48,11 +48,11 @@
 
         .calendar-header h2 {
             font-size: 1.5rem;
-            color: #333;
+            color: #4a676e;
         }
 
         .nav-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #9DBEC3 0%, #8aafb5 100%);
             color: white;
             border: none;
             padding: 8px 16px;
@@ -60,13 +60,13 @@
             cursor: pointer;
             font-size: 1rem;
             transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 4px 15px rgba(157, 190, 195, 0.3);
         }
 
         .nav-btn:hover {
-            background: linear-gradient(135deg, #5568d3 0%, #6a4099 100%);
+            background: linear-gradient(135deg, #8aafb5 0%, #779ca2 100%);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 6px 20px rgba(157, 190, 195, 0.4);
         }
 
         .calendar-grid {
@@ -78,9 +78,9 @@
         .calendar-day-header {
             text-align: center;
             font-weight: bold;
-            color: #666;
+            color: #4a676e;
             padding: 10px 0;
-            background: linear-gradient(135deg, #f5f5f5, #e8e8e8);
+            background: linear-gradient(135deg, #f0f7f8, #e0f0f3);
             border-radius: 8px;
         }
 
@@ -93,12 +93,12 @@
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s;
-            background: linear-gradient(145deg, #f9f9f9, #e8e8e8);
+            background: linear-gradient(145deg, #ffffff, #f8fbfc);
             position: relative;
         }
 
         .calendar-day:hover {
-            background: linear-gradient(145deg, #e8e4ff, #d6cfff);
+            background: linear-gradient(145deg, #e8f0f2, #d8e8ec);
             transform: scale(1.05);
         }
 
@@ -111,14 +111,14 @@
             content: '';
             width: 8px;
             height: 8px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #9DBEC3, #8aafb5);
             border-radius: 50%;
             position: absolute;
             bottom: 5px;
         }
 
         .calendar-day.selected {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #9DBEC3, #8aafb5);
             color: white;
         }
 
@@ -127,7 +127,7 @@
         }
 
         .calendar-day.in-range {
-            background: linear-gradient(145deg, #e8e4ff, #d6cfff);
+            background: linear-gradient(145deg, #e8f0f2, #d8e8ec);
         }
 
         .form-section {
@@ -232,23 +232,23 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #9DBEC3 0%, #8aafb5 100%);
             color: white;
         }
 
         .btn-primary:hover {
-            background: linear-gradient(135deg, #5568d3 0%, #6a4099 100%);
+            background: linear-gradient(135deg, #8aafb5 0%, #779ca2 100%);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 6px 20px rgba(157, 190, 195, 0.4);
         }
 
         .btn-secondary {
-            background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
-            color: #333;
+            background: linear-gradient(135deg, #f0f7f8, #e0f0f3);
+            color: #4a676e;
         }
 
         .btn-secondary:hover {
-            background: linear-gradient(135deg, #e0e0e0, #d0d0d0);
+            background: linear-gradient(135deg, #e0f0f3, #d0e8ec);
             transform: translateY(-2px);
         }
 
@@ -257,12 +257,12 @@
         }
 
         .records-section h3 {
-            color: #333;
+            color: #4a676e;
             margin-bottom: 15px;
         }
 
         .record-item {
-            background: linear-gradient(145deg, #f9f9f9, #e8e8e8);
+            background: linear-gradient(145deg, #ffffff, #f8fbfc);
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 10px;
@@ -283,47 +283,47 @@
 
         .record-info .student-name {
             font-weight: bold;
-            color: #333;
+            color: #4a676e;
             font-size: 1.1rem;
         }
 
         .record-info .details {
-            color: #666;
+            color: #6b8a91;
             font-size: 0.9rem;
             margin-top: 5px;
         }
 
         .record-fee {
             font-weight: bold;
-            color: #667eea;
+            color: #8aafb5;
             font-size: 1.2rem;
         }
 
         .delete-btn {
-            background: linear-gradient(135deg, #ff4757, #ff3344);
-            color: white;
+            background: linear-gradient(135deg, #c9d9dc 0%, #b6cdd0 100%);
+            color: #4a676e;
             border: none;
             padding: 8px 12px;
             border-radius: 6px;
             cursor: pointer;
             margin-left: 10px;
-            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+            box-shadow: 0 4px 15px rgba(201, 217, 220, 0.3);
             transition: all 0.3s;
         }
 
         .delete-btn:hover {
-            background: linear-gradient(135deg, #ff3344, #ff1a2e);
+            background: linear-gradient(135deg, #b6cdd0 0%, #a3bec2 100%);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 71, 87, 0.4);
+            box-shadow: 0 6px 20px rgba(201, 217, 220, 0.4);
         }
 
         .stats-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #9DBEC3 0%, #8aafb5 100%);
             color: white;
             padding: 20px;
             border-radius: 16px;
             margin-top: 20px;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 30px rgba(157, 190, 195, 0.3);
         }
 
         .stats-section h3 {
@@ -395,7 +395,7 @@
         }
 
         .modal-content {
-            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            background: linear-gradient(145deg, #ffffff, #f8fbfc);
             padding: 30px;
             border-radius: 16px;
             width: 90%;
@@ -404,7 +404,7 @@
         }
 
         .modal-content h3 {
-            color: #333;
+            color: #4a676e;
             margin-bottom: 20px;
             text-align: center;
         }
@@ -440,123 +440,124 @@
                     </div>
                     <div class="calendar-grid" id="calendarGrid"></div>
                 </div>
+            </div>
+        </div>
 
-                <div class="card stats-section">
-                    <h3>💰 费用统计</h3>
-                    <div class="date-range-selector">
-                        <input type="date" id="startDate">
-                        <span>至</span>
-                        <input type="date" id="endDate">
-                        <button class="nav-btn" id="calcRange">计算</button>
-                        <button class="nav-btn" id="copyResults">复制结果</button>
-                    </div>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-value" id="totalSessions">0</div>
-                            <div class="stat-label">总课时</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value" id="totalFee">¥0</div>
-                            <div class="stat-label">总课时费</div>
-                        </div>
-                    </div>
-                    <div class="records-section" style="margin-top: 20px; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 12px;">
-                        <h4 style="margin-bottom: 10px; font-size: 1rem;">📋 时间段课程安排</h4>
-                        <div id="timeRangeRecords" style="max-height: 300px; overflow-y: auto;">
-                            <div class="empty-state">选择日期范围后点击计算</div>
-                        </div>
-                    </div>
+        <div class="card stats-section" style="margin-top: 20px;">
+            <h3>💰 费用统计</h3>
+            <div class="date-range-selector">
+                <input type="date" id="startDate">
+                <span>至</span>
+                <input type="date" id="endDate">
+                <button class="nav-btn" id="calcRange">计算</button>
+                <button class="nav-btn" id="copyResults">复制结果</button>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value" id="totalSessions">0</div>
+                    <div class="stat-label">总课时</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="totalFee">¥0</div>
+                    <div class="stat-label">总课时费</div>
                 </div>
             </div>
-
-            <div class="right-panel">
-                <div class="card">
-                    <div class="form-section">
-                        <h3 id="formTitle">➕ 添加家教记录</h3>
-                        <form id="recordForm">
-                            <input type="hidden" id="editId">
-                            <div class="form-group">
-                                <label for="studentName">学生姓名</label>
-                                <input type="text" id="studentName" placeholder="请输入学生姓名" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="grade">年级</label>
-                                <select id="grade" required>
-                                    <option value="">请选择年级</option>
-                                    <option value="初三">初三</option>
-                                    <option value="高一">高一</option>
-                                    <option value="高二">高二</option>
-                                    <option value="高三">高三</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="location">上课地点</label>
-                                <select id="location" required>
-                                    <option value="">请选择地点</option>
-                                    <option value="明爱补习社">明爱补习社</option>
-                                    <option value="农讲所补习社">农讲所补习社</option>
-                                    <option value="其他">其他</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="teachingDate">上课日期</label>
-                                <input type="date" id="teachingDate" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="startTime">上课时间（开始）</label>
-                                <div style="display: flex; gap: 10px;">
-                                    <select id="startHour" required style="flex: 1;">
-                                        <option value="">时</option>
-                                        <option value="08">08</option>
-                                        <option value="09">09</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                        <option value="13">13</option>
-                                        <option value="14">14</option>
-                                        <option value="15">15</option>
-                                        <option value="16">16</option>
-                                        <option value="17">17</option>
-                                        <option value="18">18</option>
-                                        <option value="19">19</option>
-                                        <option value="20">20</option>
-                                    </select>
-                                    <select id="startMinute" required style="flex: 1;">
-                                        <option value="">分</option>
-                                        <option value="00">00</option>
-                                        <option value="30">30</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="endTime">上课时间（结束）</label>
-                                <input type="text" id="endTime" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="homework">课后作业</label>
-                                <textarea id="homework" rows="3" placeholder="请输入课后作业内容"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="fee">课时费 (元)</label>
-                                <select id="fee" required>
-                                    <option value="">请选择课时费</option>
-                                    <option value="350">350</option>
-                                    <option value="400">400</option>
-                                    <option value="450">450</option>
-                                    <option value="500">500</option>
-                                </select>
-                            </div>
-                            <div class="btn-group">
-                                <button type="submit" class="btn btn-primary" id="submitBtn">保存记录</button>
-                                <button type="button" class="btn btn-secondary" id="cancelBtn">取消</button>
-                            </div>
-                        </form>
-                    </div>
+            <div class="records-section" style="margin-top: 20px; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 12px;">
+                <h4 style="margin-bottom: 10px; font-size: 1rem;">📋 时间段课程安排</h4>
+                <div id="timeRangeRecords" style="max-height: 300px; overflow-y: auto;">
+                    <div class="empty-state">选择日期范围后点击计算</div>
                 </div>
+            </div>
+        </div>
 
-                <div class="card records-section">
-                    <h3>📋 全部记录</h3>
-                    <div id="recordsList"></div>
+        <!-- 添加记录模态框 -->
+        <div class="modal" id="addRecordModal">
+            <div class="modal-content" style="max-width: 500px;">
+                <h3>➕ 添加家教记录</h3>
+                <form id="recordForm">
+                    <input type="hidden" id="editId">
+                    <div class="form-group">
+                        <label for="studentName">学生姓名</label>
+                        <input type="text" id="studentName" placeholder="请输入学生姓名" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="grade">年级</label>
+                        <select id="grade" required>
+                            <option value="">请选择年级</option>
+                            <option value="初三">初三</option>
+                            <option value="高一">高一</option>
+                            <option value="高二">高二</option>
+                            <option value="高三">高三</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">上课地点</label>
+                        <select id="location" required>
+                            <option value="">请选择地点</option>
+                            <option value="明爱补习社">明爱补习社</option>
+                            <option value="农讲所补习社">农讲所补习社</option>
+                            <option value="其他">其他</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="teachingDate">上课日期</label>
+                        <input type="date" id="teachingDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="startTime">上课时间（开始）</label>
+                        <div style="display: flex; gap: 10px;">
+                            <select id="startHour" required style="flex: 1;">
+                                <option value="">时</option>
+                                <option value="08">08</option>
+                                <option value="09">09</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                            </select>
+                            <select id="startMinute" required style="flex: 1;">
+                                <option value="">分</option>
+                                <option value="00">00</option>
+                                <option value="30">30</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="endTime">上课时间（结束）</label>
+                        <input type="text" id="endTime" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="homework">课后作业</label>
+                        <textarea id="homework" rows="3" placeholder="请输入课后作业内容"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="fee">课时费 (元)</label>
+                        <input type="number" id="fee" min="0" step="1" placeholder="请输入课时费" required>
+                    </div>
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-primary" id="submitBtn">保存记录</button>
+                        <button type="button" class="btn btn-secondary" id="cancelBtn">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- 查看当日记录模态框 -->
+        <div class="modal" id="viewRecordsModal">
+            <div class="modal-content" style="max-width: 600px; max-height: 80vh;">
+                <h3>📋 当日记录</h3>
+                <div id="dayRecordsList" style="max-height: 400px; overflow-y: auto;">
+                    <div class="empty-state">当日暂无记录</div>
+                </div>
+                <div class="btn-group" style="margin-top: 20px;">
+                    <button class="btn btn-secondary" id="closeViewModal">关闭</button>
                 </div>
             </div>
         </div>
@@ -792,20 +793,120 @@
             });
         }
 
+        function openDateModal(dateStr, dayEl) {
+            selectedDate = dateStr;
+            document.getElementById('teachingDate').value = dateStr;
+
+            document.getElementById('addRecordBtn').onclick = () => {
+                dateModal.classList.remove('active');
+                const addRecordModal = document.getElementById('addRecordModal');
+                addRecordModal.classList.add('active');
+                
+                document.getElementById('editId').value = '';
+                recordForm.reset();
+                document.getElementById('teachingDate').value = dateStr;
+                
+                // 自动设置为当天时间（当前小时，分钟取00或30）
+                const now = new Date();
+                const hour = now.getHours();
+                const clampedHour = Math.max(8, Math.min(20, hour));
+                const minute = now.getMinutes() < 30 ? '00' : '30';
+                
+                document.getElementById('startHour').value = clampedHour.toString().padStart(2, '0');
+                document.getElementById('startMinute').value = minute;
+                
+                // 自动计算结束时间
+                updateEndTime();
+                
+                document.getElementById('studentName').focus();
+            };
+
+            document.getElementById('viewRecordsBtn').onclick = () => {
+                dateModal.classList.remove('active');
+                showDayRecords(dateStr);
+            };
+
+            dateModal.classList.add('active');
+            renderCalendar();
+        }
+
+        function showDayRecords(dateStr) {
+            const dayRecords = records.filter(r => r.date === dateStr);
+            const displayEl = document.getElementById('dayRecordsList');
+
+            if (dayRecords.length === 0) {
+                displayEl.innerHTML = '<div class="empty-state">当日暂无记录</div>';
+            } else {
+                displayEl.innerHTML = dayRecords.map(record => createRecordHTML(record)).join('');
+                attachDeleteListeners();
+            }
+
+            // 显示查看记录模态框
+            document.getElementById('viewRecordsModal').classList.add('active');
+        }
+
+        function createRecordHTML(record) {
+            return `
+                <div class="record-item" data-id="${record.id}">
+                    <div class="record-info">
+                        <div class="student-name">${record.studentName} (${record.grade})</div>
+                        <div class="details">
+                            📍 ${record.location} | 🕐 ${record.startTime} - ${record.endTime} | 📅 ${record.date}
+                        </div>
+                        ${record.homework ? `<div class="details" style="margin-top: 5px; font-style: italic;">📝 作业：${record.homework}</div>` : ''}
+                    </div>
+                    <div class="record-fee">¥${record.fee}</div>
+                    <div style="display: flex; gap: 5px;">
+                        <button class="btn btn-primary" style="padding: 6px 10px; font-size: 0.8rem;" onclick="editRecord('${record.id}')">修改</button>
+                        <button class="delete-btn" onclick="deleteRecord('${record.id}')">删除</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderRecords() {
+            // 不再需要在主页面显示全部记录
+        }
+
+        function attachDeleteListeners() {
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.onclick = () => deleteRecord(btn.closest('.record-item').dataset.id);
+            });
+            
+            document.querySelectorAll('.btn-primary').forEach(btn => {
+                if (btn.textContent === '修改') {
+                    btn.onclick = () => editRecord(btn.closest('.record-item').dataset.id);
+                }
+            });
+        }
+
         function deleteRecord(id) {
             if (confirm('确定要删除这条记录吗？')) {
                 records = records.filter(r => r.id !== id);
                 saveRecords();
-                renderRecords();
                 renderCalendar();
                 updateStats();
+                
+                // 重新渲染当前打开的模态框中的记录
+                const viewModal = document.getElementById('viewRecordsModal');
+                if (viewModal.classList.contains('active')) {
+                    const currentDate = document.getElementById('teachingDate').value;
+                    if (currentDate) {
+                        showDayRecords(currentDate);
+                    }
+                }
             }
         }
 
         function editRecord(id) {
             const record = records.find(r => r.id === id);
             if (record) {
-                document.getElementById('formTitle').textContent = '✏️ 修改家教记录';
+                // 先关闭查看记录模态框
+                document.getElementById('viewRecordsModal').classList.remove('active');
+                
+                const addRecordModal = document.getElementById('addRecordModal');
+                addRecordModal.classList.add('active');
+                
                 document.getElementById('editId').value = record.id;
                 document.getElementById('studentName').value = record.studentName;
                 document.getElementById('grade').value = record.grade;
@@ -824,9 +925,6 @@
                 document.getElementById('homework').value = record.homework || '';
                 
                 document.getElementById('fee').value = record.fee;
-                
-                // 滚动到表单
-                document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
             }
         }
 
@@ -924,19 +1022,23 @@
                 }
 
                 saveRecords();
-                renderRecords();
                 renderCalendar();
                 updateStats();
 
+                // 关闭模态框
+                document.getElementById('addRecordModal').classList.remove('active');
                 recordForm.reset();
                 document.getElementById('editId').value = '';
-                document.getElementById('formTitle').textContent = '➕ 添加家教记录';
             });
 
             document.getElementById('cancelBtn').addEventListener('click', () => {
+                document.getElementById('addRecordModal').classList.remove('active');
                 recordForm.reset();
                 document.getElementById('editId').value = '';
-                document.getElementById('formTitle').textContent = '➕ 添加家教记录';
+            });
+
+            document.getElementById('closeViewModal').addEventListener('click', () => {
+                document.getElementById('viewRecordsModal').classList.remove('active');
             });
 
             document.getElementById('startHour').addEventListener('change', updateEndTime);
@@ -999,9 +1101,23 @@
                 }
             });
 
+            document.getElementById('addRecordModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('addRecordModal')) {
+                    document.getElementById('addRecordModal').classList.remove('active');
+                }
+            });
+
+            document.getElementById('viewRecordsModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('viewRecordsModal')) {
+                    document.getElementById('viewRecordsModal').classList.remove('active');
+                }
+            });
+
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
                     dateModal.classList.remove('active');
+                    document.getElementById('addRecordModal').classList.remove('active');
+                    document.getElementById('viewRecordsModal').classList.remove('active');
                 }
             });
         }
