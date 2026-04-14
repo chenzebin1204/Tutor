@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>家教记录</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-header h2 {
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #6a4099 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .calendar-day-header {
+            text-align: center;
+            font-weight: bold;
+            color: #666;
+            padding: 10px 0;
+            background: linear-gradient(135deg, #f5f5f5, #e8e8e8);
+            border-radius: 8px;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: linear-gradient(145deg, #f9f9f9, #e8e8e8);
+            position: relative;
+        }
+
+        .calendar-day:hover {
+            background: linear-gradient(145deg, #e8e4ff, #d6cfff);
+            transform: scale(1.05);
+        }
+
+        .calendar-day.other-month {
+            color: #ccc;
+            background: transparent;
+        }
+
+        .calendar-day.has-record::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            position: absolute;
+            bottom: 5px;
+        }
+
+        .calendar-day.selected {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .calendar-day.selected::after {
+            background: white;
+        }
+
+        .calendar-day.in-range {
+            background: linear-gradient(145deg, #e8e4ff, #d6cfff);
+        }
+
+        .form-section {
+            margin-top: 20px;
+        }
+
+        .form-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-group label[for="studentName"]::before {
+            content: '👨‍🎓';
+            font-size: 1rem;
+        }
+
+        .form-group label[for="grade"]::before {
+            content: '�';
+            font-size: 1rem;
+        }
+
+        .form-group label[for="location"]::before {
+            content: '📍';
+            font-size: 1rem;
+        }
+
+        .form-group label[for="teachingDate"]::before {
+            content: '📅';
+            font-size: 1rem;
+        }
+
+        .form-group label[for="startTime"]::before {
+            content: '🕐';
+            font-size: 1rem;
+        }
+
+        .form-group label[for="endTime"]::before {
+            content: '🕒';
+            font-size: 1rem;
+        }
+
+        .form-group label[for="homework"]::before {
+            content: '📝';
+            font-size: 1rem;
+        }
+
+        .form-group label[for="fee"]::before {
+            content: '💰';
+            font-size: 1rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            resize: vertical;
+            background: linear-gradient(145deg, #ffffff, #f9f9f9);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #6a4099 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #e0e0e0, #d0d0d0);
+            transform: translateY(-2px);
+        }
+
+        .records-section {
+            margin-top: 20px;
+        }
+
+        .records-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .record-item {
+            background: linear-gradient(145deg, #f9f9f9, #e8e8e8);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .record-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .record-info {
+            flex: 1;
+        }
+
+        .record-info .student-name {
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .record-info .details {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .record-fee {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.2rem;
+        }
+
+        .delete-btn {
+            background: linear-gradient(135deg, #ff4757, #ff3344);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-left: 10px;
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+            transition: all 0.3s;
+        }
+
+        .delete-btn:hover {
+            background: linear-gradient(135deg, #ff3344, #ff1a2e);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 71, 87, 0.4);
+        }
+
+        .stats-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 16px;
+            margin-top: 20px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .stats-section h3 {
+            margin-bottom: 15px;
+        }
+
+        .date-range-selector {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .date-range-selector input {
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.9);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .stat-item {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .stat-item:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            padding: 30px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .modal-content h3 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #999;
+            padding: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 上门家教记录</h1>
+
+        <div class="main-content">
+            <div class="left-panel">
+                <div class="card">
+                    <div class="calendar-header">
+                        <button class="nav-btn" id="prevMonth">&lt; 上月</button>
+                        <h2 id="currentMonth"></h2>
+                        <button class="nav-btn" id="nextMonth">下月 &gt;</button>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid"></div>
+                </div>
+
+                <div class="card stats-section">
+                    <h3>💰 费用统计</h3>
+                    <div class="date-range-selector">
+                        <input type="date" id="startDate">
+                        <span>至</span>
+                        <input type="date" id="endDate">
+                        <button class="nav-btn" id="calcRange">计算</button>
+                        <button class="nav-btn" id="copyResults">复制结果</button>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value" id="totalSessions">0</div>
+                            <div class="stat-label">总课时</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="totalFee">¥0</div>
+                            <div class="stat-label">总课时费</div>
+                        </div>
+                    </div>
+                    <div class="records-section" style="margin-top: 20px; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 12px;">
+                        <h4 style="margin-bottom: 10px; font-size: 1rem;">📋 时间段课程安排</h4>
+                        <div id="timeRangeRecords" style="max-height: 300px; overflow-y: auto;">
+                            <div class="empty-state">选择日期范围后点击计算</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <div class="card">
+                    <div class="form-section">
+                        <h3 id="formTitle">➕ 添加家教记录</h3>
+                        <form id="recordForm">
+                            <input type="hidden" id="editId">
+                            <div class="form-group">
+                                <label for="studentName">学生姓名</label>
+                                <input type="text" id="studentName" placeholder="请输入学生姓名" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="grade">年级</label>
+                                <select id="grade" required>
+                                    <option value="">请选择年级</option>
+                                    <option value="初三">初三</option>
+                                    <option value="高一">高一</option>
+                                    <option value="高二">高二</option>
+                                    <option value="高三">高三</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="location">上课地点</label>
+                                <select id="location" required>
+                                    <option value="">请选择地点</option>
+                                    <option value="明爱补习社">明爱补习社</option>
+                                    <option value="农讲所补习社">农讲所补习社</option>
+                                    <option value="其他">其他</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="teachingDate">上课日期</label>
+                                <input type="date" id="teachingDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="startTime">上课时间（开始）</label>
+                                <div style="display: flex; gap: 10px;">
+                                    <select id="startHour" required style="flex: 1;">
+                                        <option value="">时</option>
+                                        <option value="08">08</option>
+                                        <option value="09">09</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                        <option value="13">13</option>
+                                        <option value="14">14</option>
+                                        <option value="15">15</option>
+                                        <option value="16">16</option>
+                                        <option value="17">17</option>
+                                        <option value="18">18</option>
+                                        <option value="19">19</option>
+                                        <option value="20">20</option>
+                                    </select>
+                                    <select id="startMinute" required style="flex: 1;">
+                                        <option value="">分</option>
+                                        <option value="00">00</option>
+                                        <option value="30">30</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="endTime">上课时间（结束）</label>
+                                <input type="text" id="endTime" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="homework">课后作业</label>
+                                <textarea id="homework" rows="3" placeholder="请输入课后作业内容"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="fee">课时费 (元)</label>
+                                <select id="fee" required>
+                                    <option value="">请选择课时费</option>
+                                    <option value="350">350</option>
+                                    <option value="400">400</option>
+                                    <option value="450">450</option>
+                                    <option value="500">500</option>
+                                </select>
+                            </div>
+                            <div class="btn-group">
+                                <button type="submit" class="btn btn-primary" id="submitBtn">保存记录</button>
+                                <button type="button" class="btn btn-secondary" id="cancelBtn">取消</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card records-section">
+                    <h3>📋 全部记录</h3>
+                    <div id="recordsList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="dateModal">
+        <div class="modal-content">
+            <h3>选择日期操作</h3>
+            <div class="btn-group" style="flex-direction: column;">
+                <button class="btn btn-primary" id="addRecordBtn">➕ 添加记录</button>
+                <button class="btn btn-secondary" id="viewRecordsBtn">📋 查看当日记录</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let records = JSON.parse(localStorage.getItem('tutoringRecords')) || [];
+        let currentDate = new Date();
+        let selectedDate = null;
+        let rangeStart = null;
+        let rangeEnd = null;
+
+        const calendarGrid = document.getElementById('calendarGrid');
+        const currentMonthEl = document.getElementById('currentMonth');
+        const recordsList = document.getElementById('recordsList');
+        const recordForm = document.getElementById('recordForm');
+        const dateModal = document.getElementById('dateModal');
+
+        const weekDays = ['日', '一', '二', '三', '四', '五', '六'];
+
+        function init() {
+            renderCalendar();
+            renderRecords();
+            updateStats();
+            setupEventListeners();
+            setDefaultDates();
+        }
+
+        function setDefaultDates() {
+            const today = new Date();
+            const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+            const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+            document.getElementById('startDate').value = formatDate(firstDay);
+            document.getElementById('endDate').value = formatDate(lastDay);
+        }
+
+        function formatDate(date) {
+            // 确保使用本地时间而不是UTC时间
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        function renderCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+
+            currentMonthEl.textContent = `${year}年${month + 1}月`;
+
+            calendarGrid.innerHTML = '';
+
+            weekDays.forEach(day => {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'calendar-day-header';
+                dayEl.textContent = day;
+                calendarGrid.appendChild(dayEl);
+            });
+
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const startPadding = firstDay.getDay();
+            const totalDays = lastDay.getDate();
+
+            for (let i = 0; i < startPadding; i++) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'calendar-day other-month';
+                const prevDate = new Date(year, month, -i);
+                dayEl.textContent = prevDate.getDate();
+                calendarGrid.appendChild(dayEl);
+            }
+
+            for (let day = 1; day <= totalDays; day++) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'calendar-day';
+                dayEl.textContent = day;
+
+                const dateStr = formatDate(new Date(year, month, day));
+
+                if (hasRecords(dateStr)) {
+                    dayEl.classList.add('has-record');
+                }
+
+                if (selectedDate === dateStr) {
+                    dayEl.classList.add('selected');
+                }
+
+                if (rangeStart && rangeEnd) {
+                    if (dateStr >= rangeStart && dateStr <= rangeEnd) {
+                        dayEl.classList.add('in-range');
+                    }
+                }
+
+                dayEl.addEventListener('click', () => openDateModal(dateStr, dayEl));
+                calendarGrid.appendChild(dayEl);
+            }
+
+            const remainingDays = 42 - (startPadding + totalDays);
+            for (let i = 1; i <= remainingDays; i++) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'calendar-day other-month';
+                dayEl.textContent = i;
+                calendarGrid.appendChild(dayEl);
+            }
+        }
+
+        function hasRecords(dateStr) {
+            return records.some(r => r.date === dateStr);
+        }
+
+        function openDateModal(dateStr, dayEl) {
+            selectedDate = dateStr;
+            document.getElementById('teachingDate').value = dateStr;
+
+            document.getElementById('addRecordBtn').onclick = () => {
+                dateModal.classList.remove('active');
+                document.getElementById('formTitle').textContent = '➕ 添加家教记录';
+                document.getElementById('editId').value = '';
+                recordForm.reset();
+                document.getElementById('teachingDate').value = dateStr;
+                
+                // 自动设置为当天时间（当前小时，分钟取00或30）
+                const now = new Date();
+                const hour = now.getHours();
+                const clampedHour = Math.max(8, Math.min(20, hour));
+                const minute = now.getMinutes() < 30 ? '00' : '30';
+                
+                document.getElementById('startHour').value = clampedHour.toString().padStart(2, '0');
+                document.getElementById('startMinute').value = minute;
+                
+                // 自动计算结束时间
+                updateEndTime();
+                
+                document.getElementById('studentName').focus();
+            };
+
+            document.getElementById('viewRecordsBtn').onclick = () => {
+                dateModal.classList.remove('active');
+                showDayRecords(dateStr);
+            };
+
+            dateModal.classList.add('active');
+            renderCalendar();
+        }
+
+        function showDayRecords(dateStr) {
+            const dayRecords = records.filter(r => r.date === dateStr);
+            const displayEl = document.getElementById('recordsList');
+
+            if (dayRecords.length === 0) {
+                displayEl.innerHTML = '<div class="empty-state">当日暂无记录</div>';
+                return;
+            }
+
+            displayEl.innerHTML = dayRecords.map(record => createRecordHTML(record)).join('');
+            attachDeleteListeners();
+        }
+
+        function updateEndTime() {
+            const startHour = document.getElementById('startHour').value;
+            const startMinute = document.getElementById('startMinute').value;
+            
+            if (!startHour || !startMinute) {
+                document.getElementById('endTime').value = '';
+                return;
+            }
+
+            const hours = parseInt(startHour);
+            const minutes = parseInt(startMinute);
+            const endDate = new Date();
+            endDate.setHours(hours + 2, minutes);
+            
+            const endHours = endDate.getHours().toString().padStart(2, '0');
+            const endMinutes = endDate.getMinutes().toString().padStart(2, '0');
+            document.getElementById('endTime').value = `${endHours}:${endMinutes}`;
+        }
+
+        function createRecordHTML(record) {
+            return `
+                <div class="record-item" data-id="${record.id}">
+                    <div class="record-info">
+                        <div class="student-name">${record.studentName} (${record.grade})</div>
+                        <div class="details">
+                            📍 ${record.location} | 🕐 ${record.startTime} - ${record.endTime} | 📅 ${record.date}
+                        </div>
+                        ${record.homework ? `<div class="details" style="margin-top: 5px; font-style: italic;">📝 作业：${record.homework}</div>` : ''}
+                    </div>
+                    <div class="record-fee">¥${record.fee}</div>
+                    <div style="display: flex; gap: 5px;">
+                        <button class="btn btn-primary" style="padding: 6px 10px; font-size: 0.8rem;" onclick="editRecord('${record.id}')">修改</button>
+                        <button class="delete-btn" onclick="deleteRecord('${record.id}')">删除</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderRecords() {
+            if (records.length === 0) {
+                recordsList.innerHTML = '<div class="empty-state">暂无记录，点击日历日期添加</div>';
+                return;
+            }
+
+            const sortedRecords = [...records].sort((a, b) => {
+                const dateCompare = b.date.localeCompare(a.date);
+                if (dateCompare !== 0) return dateCompare;
+                return b.time.localeCompare(a.time);
+            });
+
+            recordsList.innerHTML = sortedRecords.map(record => createRecordHTML(record)).join('');
+            attachDeleteListeners();
+        }
+
+        function attachDeleteListeners() {
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.onclick = () => deleteRecord(btn.closest('.record-item').dataset.id);
+            });
+            
+            document.querySelectorAll('.btn-primary').forEach(btn => {
+                if (btn.textContent === '修改') {
+                    btn.onclick = () => editRecord(btn.closest('.record-item').dataset.id);
+                }
+            });
+        }
+
+        function deleteRecord(id) {
+            if (confirm('确定要删除这条记录吗？')) {
+                records = records.filter(r => r.id !== id);
+                saveRecords();
+                renderRecords();
+                renderCalendar();
+                updateStats();
+            }
+        }
+
+        function editRecord(id) {
+            const record = records.find(r => r.id === id);
+            if (record) {
+                document.getElementById('formTitle').textContent = '✏️ 修改家教记录';
+                document.getElementById('editId').value = record.id;
+                document.getElementById('studentName').value = record.studentName;
+                document.getElementById('grade').value = record.grade;
+                document.getElementById('location').value = record.location;
+                document.getElementById('teachingDate').value = record.date;
+                
+                // 解析开始时间
+                const [startHour, startMinute] = record.startTime.split(':');
+                document.getElementById('startHour').value = startHour;
+                document.getElementById('startMinute').value = startMinute;
+                
+                // 自动计算结束时间
+                updateEndTime();
+                
+                // 填充课后作业
+                document.getElementById('homework').value = record.homework || '';
+                
+                document.getElementById('fee').value = record.fee;
+                
+                // 滚动到表单
+                document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function saveRecords() {
+            localStorage.setItem('tutoringRecords', JSON.stringify(records));
+        }
+
+        function updateStats() {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+
+            let filteredRecords = records;
+
+            if (startDate && endDate) {
+                filteredRecords = records.filter(r => r.date >= startDate && r.date <= endDate);
+            }
+
+            const totalSessions = filteredRecords.length;
+            const totalFee = filteredRecords.reduce((sum, r) => sum + parseFloat(r.fee), 0);
+
+            document.getElementById('totalSessions').textContent = totalSessions;
+            document.getElementById('totalFee').textContent = `¥${totalFee.toFixed(2)}`;
+            
+            // 显示时间段课程安排
+            displayTimeRangeRecords(filteredRecords);
+        }
+
+        function displayTimeRangeRecords(records) {
+            const container = document.getElementById('timeRangeRecords');
+            
+            if (records.length === 0) {
+                container.innerHTML = '<div class="empty-state">该时间段内暂无记录</div>';
+                return;
+            }
+
+            // 按日期和时间排序
+            const sortedRecords = [...records].sort((a, b) => {
+                const dateCompare = a.date.localeCompare(b.date);
+                if (dateCompare !== 0) return dateCompare;
+                return a.startTime.localeCompare(b.startTime);
+            });
+
+            container.innerHTML = sortedRecords.map(record => {
+                const date = new Date(record.date);
+                const weekDays = ['日', '一', '二', '三', '四', '五', '六'];
+                const weekDay = weekDays[date.getDay()];
+                return `
+                    <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px; margin-bottom: 8px;">
+                        <div style="font-weight: bold;">${record.date} (周${weekDay})</div>
+                        <div>${record.startTime} - ${record.endTime} | ${record.studentName}</div>
+                        ${record.homework ? `<div style="margin-top: 5px; font-size: 0.9rem; font-style: italic;">📝 作业：${record.homework}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function setupEventListeners() {
+            document.getElementById('prevMonth').addEventListener('click', () => {
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                renderCalendar();
+            });
+
+            document.getElementById('nextMonth').addEventListener('click', () => {
+                currentDate.setMonth(currentDate.getMonth() + 1);
+                renderCalendar();
+            });
+
+            recordForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const editId = document.getElementById('editId').value;
+                const startHour = document.getElementById('startHour').value;
+                const startMinute = document.getElementById('startMinute').value;
+                const startTime = `${startHour}:${startMinute}`;
+                
+                const recordData = {
+                    id: editId || Date.now().toString(),
+                    studentName: document.getElementById('studentName').value,
+                    grade: document.getElementById('grade').value,
+                    location: document.getElementById('location').value,
+                    date: document.getElementById('teachingDate').value,
+                    startTime: startTime,
+                    endTime: document.getElementById('endTime').value,
+                    homework: document.getElementById('homework').value,
+                    fee: parseFloat(document.getElementById('fee').value)
+                };
+
+                if (editId) {
+                    const index = records.findIndex(r => r.id === editId);
+                    if (index !== -1) {
+                        records[index] = recordData;
+                    }
+                } else {
+                    records.push(recordData);
+                }
+
+                saveRecords();
+                renderRecords();
+                renderCalendar();
+                updateStats();
+
+                recordForm.reset();
+                document.getElementById('editId').value = '';
+                document.getElementById('formTitle').textContent = '➕ 添加家教记录';
+            });
+
+            document.getElementById('cancelBtn').addEventListener('click', () => {
+                recordForm.reset();
+                document.getElementById('editId').value = '';
+                document.getElementById('formTitle').textContent = '➕ 添加家教记录';
+            });
+
+            document.getElementById('startHour').addEventListener('change', updateEndTime);
+            document.getElementById('startMinute').addEventListener('change', updateEndTime);
+
+            document.getElementById('calcRange').addEventListener('click', () => {
+                rangeStart = document.getElementById('startDate').value;
+                rangeEnd = document.getElementById('endDate').value;
+                updateStats();
+                renderCalendar();
+            });
+
+            document.getElementById('copyResults').addEventListener('click', () => {
+                const startDate = document.getElementById('startDate').value;
+                const endDate = document.getElementById('endDate').value;
+                const totalSessions = document.getElementById('totalSessions').textContent;
+                const totalFee = document.getElementById('totalFee').textContent;
+                
+                let filteredRecords = records;
+                if (startDate && endDate) {
+                    filteredRecords = records.filter(r => r.date >= startDate && r.date <= endDate);
+                }
+                
+                // 按日期和时间排序
+                const sortedRecords = [...filteredRecords].sort((a, b) => {
+                    const dateCompare = a.date.localeCompare(b.date);
+                    if (dateCompare !== 0) return dateCompare;
+                    return a.startTime.localeCompare(b.startTime);
+                });
+                
+                // 构建复制文本
+                let text = `家教费用统计\n`;
+                text += `日期范围：${startDate} 至 ${endDate}\n`;
+                text += `总课时：${totalSessions}\n`;
+                text += `总课时费：${totalFee}\n\n`;
+                text += `课程安排：\n`;
+                
+                sortedRecords.forEach((record, index) => {
+                    const date = new Date(record.date);
+                    const weekDays = ['日', '一', '二', '三', '四', '五', '六'];
+                    const weekDay = weekDays[date.getDay()];
+                    text += `${index + 1}. ${record.date} (周${weekDay}) ${record.startTime} - ${record.endTime} ${record.studentName}\n`;
+                    if (record.homework) {
+                        text += `   作业：${record.homework}\n`;
+                    }
+                });
+                
+                // 复制到剪贴板
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('结果已复制到剪贴板！');
+                }).catch(err => {
+                    console.error('复制失败:', err);
+                    alert('复制失败，请手动复制');
+                });
+            });
+
+            dateModal.addEventListener('click', (e) => {
+                if (e.target === dateModal) {
+                    dateModal.classList.remove('active');
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    dateModal.classList.remove('active');
+                }
+            });
+        }
+
+        init();
+    </script>
+</body>
+</html>
